@@ -3,21 +3,18 @@ import { getCookie } from '.';
 import API_ENDPOINTS from './Endpoints';
 
 
-    export const getHeaderConfig = ()  => {
+export const getHeaderConfig = ()  => {
 
-        const jwtToken = getCookie('jwtToken');
+    const jwtToken = getCookie('jwtToken');
 
-         return {
-            headers: {
-            Authorization:  `Bearer ${jwtToken}`,
-            }
+        return {
+        headers: {
+        Authorization:  `Bearer ${jwtToken}`,
         }
-    } 
+    }
+} 
     
-    export const userAxios = axios.create({
-        baseURL : API_ENDPOINTS.USERS,
-        withCredentials: true,
-    });
-
-// }
-
+export const userAxios = axios.create({
+    baseURL : API_ENDPOINTS.USERS,
+    withCredentials: true,
+});

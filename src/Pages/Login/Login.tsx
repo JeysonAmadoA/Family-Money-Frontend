@@ -1,5 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form"
-import { LoginUser, test } from "../../Services/Auth/Auth.Service"
+import { loginUser, test } from "../../Services/Auth/Auth.Service"
+import { useDispatch } from "react-redux"
+import { logIn } from "../../Redux/States/Login.State"
+import { setUser } from "../../Redux/States/User.State"
 
 type Inputs = {
     email: string
@@ -7,12 +10,16 @@ type Inputs = {
   }
   
 function Login() {
+
+  const dispatch = useDispatch();
     
   const {register,handleSubmit,formState: { errors },} = useForm<Inputs>()
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
       console.log("Iniciando sesion...");
-      LoginUser(data);
+      const result = await loginUser(data);
+      dispatch(setUser({...result}));
+      dispatch(logIn());
   }
 
   const testClick = () => {

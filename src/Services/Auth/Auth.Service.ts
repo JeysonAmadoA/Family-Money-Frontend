@@ -1,23 +1,29 @@
 import axios from "axios";
-import { LoginData } from "../../Models/Auth/Login.Model"
+import { LoginData } from "../../Models/Auth/LoginData.Model"
 import API_ENDPOINTS from "../../Utilities/Endpoints";
 import { getHeaderConfig, userAxios } from "../../Utilities";
+import { User } from "../../Models/Users/User.Model";
+import { EmptyUserState } from "../../Redux/States/User.State";
 
 
-const LoginUser = async (loginData: LoginData) => {
+const loginUser = async (loginData: LoginData) : Promise<User> => {
   try {
     const response = await axios.post(API_ENDPOINTS.LOGIN, loginData);
     const token = response.headers.authorization;    
     const cookieOptions = 'SameSite=None; Secure;';
-    document.cookie = `jwtToken=${token}; ${cookieOptions}`;    
+    document.cookie = `jwtToken=${token}; ${cookieOptions}`;   
+
+    alert('Inicio de sesión exitoso');
+    return response.data;
   } catch (error) {
-    console.error('Error al iniciar sesión:', error);
-  } finally {
-    console.log('Inicio de sesión exitoso');
-    // configRequest();
-  }
+    alert('Error al iniciar sesión:'+ error);
+    return EmptyUserState;
+  } 
 };
 
+const logOutUser = () => {
+  return { isLogged: false }
+}
 
 
 const test = async () => {  
@@ -25,9 +31,9 @@ const test = async () => {
     const response = await userAxios("", getHeaderConfig());
     console.log(response.data);
   } catch (error) {
-    console.error('Error Testing:', error);
+    alert('Error Users:' + error);
   }
 };
 
 
-export {LoginUser, test};
+export {loginUser, test, logOutUser};
