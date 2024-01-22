@@ -11,6 +11,7 @@ import AuthGuard from './Guards/Auth.Guard'
 import MoneyHome from './Pages/FamilyMoney/MoneyHome'
 import Home from './Pages/Home/Home'
 import UserRegister from './Pages/UserRegister/UserRegister'
+import { GroupContextProvider } from './Pages/FamilyMoney/Context/FamilyGroups/Groups.Provider'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     <>
       <Suspense fallback={<>Cargando....</>}>
           <Provider store={Store}>
+          <GroupContextProvider>
               <BrowserRouter>
                   <RoutesNotFound>
                       <Route path='/' element={<Navigate to={PrivateRoutes.HOME}/>}/>
@@ -29,10 +31,10 @@ function App() {
                       </Route>                      
                   </RoutesNotFound>
               </BrowserRouter>
+          </GroupContextProvider>
           </Provider>
       </Suspense>
     </>
-
   )
 }
 

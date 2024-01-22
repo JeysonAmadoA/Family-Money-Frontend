@@ -3,7 +3,6 @@ import { LoginData } from "../../Models/Auth/LoginData.Model"
 import API_ENDPOINTS from "../../Utilities/Endpoints";
 import { getHeaderConfig, userAxios } from "../../Utilities";
 import { User } from "../../Models/Users/User.Model";
-import { EmptyUserState } from "../../Redux/States/User.State";
 
 
 const loginUser = async (loginData: LoginData) : Promise<User> => {
@@ -12,12 +11,12 @@ const loginUser = async (loginData: LoginData) : Promise<User> => {
     const token = response.headers.authorization;    
     const cookieOptions = 'SameSite=None; Secure;';
     document.cookie = `jwtToken=${token}; ${cookieOptions}`;   
-
     alert('Inicio de sesión exitoso');
     return response.data;
-  } catch (error) {
-    alert('Error al iniciar sesión:'+ error);
-    return EmptyUserState;
+  } catch (exception) {
+    const error : string = "Error al iniciar sesión:" + exception;
+    alert(error);
+    throw new Error(error);
   } 
 };
 

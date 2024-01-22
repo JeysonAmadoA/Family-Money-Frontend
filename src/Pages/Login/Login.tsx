@@ -1,8 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form"
 import { loginUser, test } from "../../Services/Auth/Auth.Service"
 import { useDispatch } from "react-redux"
-import { logIn } from "../../Redux/States/Login.State"
-import { setUser } from "../../Redux/States/User.State"
+import { logIn, logOut } from "../../Redux/States/Login.State"
+import { resetUser, setUser } from "../../Redux/States/User.State"
+import { useNavigate } from "react-router-dom"
+import { PrivateRoutes } from "../../Routes/Private.Routes"
 
 type Inputs = {
     email: string
@@ -12,14 +14,21 @@ type Inputs = {
 function Login() {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
     
   const {register,handleSubmit,formState: { errors },} = useForm<Inputs>()
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-      console.log("Iniciando sesion...");
+    try {
       const result = await loginUser(data);
       dispatch(setUser({...result}));
       dispatch(logIn());
+      navigate(`/${PrivateRoutes.HOME}`, {replace: true});
+    } catch (error) {
+      
+      dispatch(logOut());
+      dispatch(resetUser());
+    }
   }
 
   const testClick = () => {

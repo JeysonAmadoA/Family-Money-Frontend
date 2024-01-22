@@ -18,3 +18,8 @@ export const userAxios = axios.create({
     baseURL : API_ENDPOINTS.USERS,
     withCredentials: true,
 });
+
+export const groupsAxios = axios.create({
+    baseURL : API_ENDPOINTS.GROUPS,
+    withCredentials: true,
+});
