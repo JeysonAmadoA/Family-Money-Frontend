@@ -14,7 +14,7 @@ function NavbarCustomer() {
             <Nav className="me-auto">
               <Nav.Link  as={Link} to={PrivateRoutes.GROUPS}>Grupos</Nav.Link>
               <Nav.Link  as={Link} to={PrivateRoutes.MEMBERS}>Miembros</Nav.Link>
-              <Nav.Link as={Link} to={PrivateRoutes.EXPENSES}>Gastos</Nav.Link>
+              <Nav.Link as={Link} to={PrivateRoutes.MONEY_REGISTER}>Registros</Nav.Link>
             </Nav>
           </Container>
         </Navbar>

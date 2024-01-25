@@ -1,6 +1,6 @@
-import { Group, GroupList } from "./Group.Model";
+import { Group } from "./Group.Model";
 
 export interface GroupContextProps {
-    groups : GroupList | Group[],
-    setGroups :  React.Dispatch<React.SetStateAction<GroupList>>;
+    groups : Group[],
+    setGroups :  React.Dispatch<React.SetStateAction<Group[]>>;
 }

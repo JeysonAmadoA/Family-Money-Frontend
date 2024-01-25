@@ -7,13 +7,12 @@ import { CreateGroupInfo } from "../../../../Models/FamilyGroups/Group.Model";
 
 function FamilyGroups() {
 
-   const [formActive, setFormActive] = useState(false);
-   const {groups} = useGroupsContext();
+  const [formActive, setFormActive] = useState(false);
+  const {groups, setGroups} = useGroupsContext();
   const {register,handleSubmit,formState: { errors },} = useForm<CreateGroupInfo>()
 
   const addGroupForm = () => {
      setFormActive(true);
-    // console.log(groups);
   }
 
    const testGroups = () => {
@@ -22,10 +21,11 @@ function FamilyGroups() {
    }
 
   const registerNewGroup : SubmitHandler<CreateGroupInfo> = async (data) => {
-      console.log(data);
       try {
         const result =  await storeFamilyGroup(data);
-        console.log(result);
+        groups.push(result);
+        setGroups(groups);
+        alert("Registrado")
       } catch (error) {
         console.log("No se pudo crear grupos");
       }
@@ -54,12 +54,7 @@ function FamilyGroups() {
             </select>
             {errors.familyGroupTypeId && <span>This field is required</span>}
 
-
-            <br />
-            <label>Dinero total del grupo</label>
-            <input type="number" {...register("familyGroupTotalMoney", { required: true })} />
-            {errors.familyGroupTotalMoney && <span>This field is required</span>}
-
+            <input type="hidden" {...register("familyGroupTotalMoney")} value="0" />
             <br />
             <input type="submit" />
           </form> 

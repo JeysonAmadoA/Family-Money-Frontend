@@ -1,4 +1,5 @@
-import { GroupType } from "./GroupType.Model"
+import { Member } from "../Members/Member.Model"
+import { GroupType, emptyGroupType } from "./GroupType.Model"
 
 export interface CreateGroupInfo {
     groupName : string,
@@ -12,7 +13,17 @@ export interface Group {
     groupName : string,
     membersQuantity : number,
     familyGroupType : GroupType,
-    familyGroupTotalMoney : number
+    familyGroupTotalMoney : number,
+    members : Member[]
+}
+
+export const emptyGroup : Group = {
+    id: 0,
+    groupName : '',
+    membersQuantity : 0,
+    familyGroupType : emptyGroupType,
+    familyGroupTotalMoney : 0,
+    members : [],
 }
 
 export interface GroupList {
