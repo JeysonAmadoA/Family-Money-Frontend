@@ -1,0 +1,14 @@
+.registerForm {
+    max-width: 400px; /* Define el ancho máximo del formulario */
+    margin: auto; /* Centra el formulario horizontalmente */
+    padding: 20px; /* Añade espacio interno al formulario */
+  }
+  
+  .registerForm h2 {
+    margin-bottom: 20px; /* Añade espacio entre el h2 y el primer Form.Group */
+  }
+
+  /* Agrega espacio entre los botones */
+.registerForm .text-center Button {
+    margin-right: 10px;
+  }

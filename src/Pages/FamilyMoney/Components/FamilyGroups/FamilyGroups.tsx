@@ -1,64 +1,39 @@
 import { useState } from "react";
 import { useGroupsContext } from "../../Context/FamilyGroups/Groups.Context"
+import GroupRegisterForm from "./Components/GroupRegisterForm";
+import NotRegisterGroups from "./Components/NotRegisterGroups";
+import DefaultGroupsView from "./Components/DefaultGroupsView";
 import { Button } from "react-bootstrap";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { storeFamilyGroup } from "../../../../Services/FamilyGroups/Groups.Service";
-import { CreateGroupInfo } from "../../../../Models/FamilyGroups/Group.Model";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 
 function FamilyGroups() {
 
   const [formActive, setFormActive] = useState(false);
-  const {groups, setGroups} = useGroupsContext();
-  const {register,handleSubmit,formState: { errors },} = useForm<CreateGroupInfo>()
+  const {groups} = useGroupsContext();
 
-  const addGroupForm = () => {
-     setFormActive(true);
-  }
-
-   const testGroups = () => {
-     console.log(groups);
-    
-   }
-
-  const registerNewGroup : SubmitHandler<CreateGroupInfo> = async (data) => {
-      try {
-        const result =  await storeFamilyGroup(data);
-        groups.push(result);
-        setGroups(groups);
-        alert("Registrado")
-      } catch (error) {
-        console.log("No se pudo crear grupos");
-      }
-  }
+  const hasGroups  = groups.length > 0
   
   return (
     <div>
-       <Button onClick={testGroups}>Pruebita 2</Button>
-        <div>
-          <form onSubmit={handleSubmit(registerNewGroup)}>
-
-            <label>Nombre del grupo</label>
-            <input {...register("groupName", { required: true })} />
-            {errors.groupName && <span>This field is required</span>}
-
-            <br />
-            <label>Cantidad de miembros</label>
-            <input type="number" {...register("membersQuantity", { required: true })} />
-            {errors.membersQuantity && <span>This field is required</span>}
-
-            <br />
-            <label>Tipo de grupo</label>
-            <select {...register("familyGroupTypeId",{required:true})}>
-              <option value="1">Presupuesto</option>
-              <option value="2">Gastos</option>
-            </select>
-            {errors.familyGroupTypeId && <span>This field is required</span>}
-
-            <input type="hidden" {...register("familyGroupTotalMoney")} value="0" />
-            <br />
-            <input type="submit" />
-          </form> 
-        </div>
+      {hasGroups 
+      ? <DefaultGroupsView/> 
+      : formActive 
+        ?  
+          <div>
+            <Button style={{marginLeft : "20px", marginTop: "20px"}} onClick={() => setFormActive(false)}>
+            <FontAwesomeIcon icon={faAngleDoubleLeft} /> Volver
+            </Button>
+            <GroupRegisterForm>
+              <div className="text-center">
+                      <Button type="submit">Crear grupo</Button>
+              </div>
+            </GroupRegisterForm>
+          </div> 
+        : <NotRegisterGroups setFormActive={setFormActive}/>
+      }
+      
+      
     </div>
   )
 }

@@ -18,3 +18,14 @@ export const emptyMember : Member = {
     memberRol : '',
     economicContribution : 0
 }
+
+export const MEMBER_ROLES = {
+    PADRE : 'Padre',
+    MADRE : 'Madre',
+    ESPOSA : 'Esposa',
+    ESPOSO : 'Esposo',
+    HIJO : 'Hijo', 
+    HIJA : 'Hija', 
+    ROOMIE : 'Roomie',
+    OTRO : 'Otro'
+}

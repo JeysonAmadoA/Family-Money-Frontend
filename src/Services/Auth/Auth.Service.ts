@@ -9,8 +9,12 @@ const loginUser = async (loginData: LoginData) : Promise<User> => {
   try {
     const response = await axios.post(API_ENDPOINTS.LOGIN, loginData);
     const token = response.headers.authorization;    
+    const tokenParts = token.split('.');
+    const payload = JSON.parse(atob(tokenParts[1]));
+    const expirationDate = new Date(payload.exp * 1000);
+    console.log(expirationDate);
     const cookieOptions = 'SameSite=None; Secure;';
-    document.cookie = `jwtToken=${token}; ${cookieOptions}`;   
+    document.cookie = `jwtToken=${token}; expires=${expirationDate.toUTCString()}; ${cookieOptions}`;
     alert('Inicio de sesión exitoso');
     return response.data;
   } catch (exception) {

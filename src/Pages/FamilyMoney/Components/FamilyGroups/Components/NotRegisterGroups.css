@@ -1,0 +1,22 @@
+.noRegisterGroups {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh; /* O ajusta la altura según sea necesario */
+  }
+  
+.noRegisterGroups span {
+margin-bottom: 10px; /* Espacio entre el texto y el botón */
+}
+  
+  /* Ajusta el estilo del botón según tus preferencias */
+  .noRegisterGroups Button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

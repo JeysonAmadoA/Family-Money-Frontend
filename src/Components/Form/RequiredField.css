@@ -1,0 +1,5 @@
+.errorMessage {
+    color: rgba(197, 47, 47, 0.692);
+    display: block; /* Asegura que se comporte como un bloque y pueda tener margen superior e inferior */
+    padding-bottom: 5px;
+  }

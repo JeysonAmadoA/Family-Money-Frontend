@@ -7,7 +7,7 @@ import { Period } from "../../../../Models/Periods/Period.Model";
 import { getPeriodsByGroupId } from "../../../../Services/Periods/Period.Service";
 import { NewPeriod } from "../../../../Services/SharingData/NewRegister.Service";
 import { Button, Tab, Tabs } from "react-bootstrap";
-import PeriodRegisterForm from "../Periods/PeriodRegisterForm";
+import PeriodRegisterForm from "../Periods/Components/PeriodRegisterForm";
 import PaymentExpenses from "../Payments/PaymentExpenses";
 import ExpenseRegisterForm from "./Components/ExpenseRegisterForm";
 

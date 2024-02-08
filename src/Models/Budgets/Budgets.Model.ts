@@ -11,3 +11,11 @@ export interface Budget {
     percentage : number
     category : string
 }
+
+export const BUDGET_CATEGORIES = {
+    GASTOS_HOGAR : 'Gastos de hogar',
+    AHORRO : 'Ahorro',
+    COMIDA : 'Comida',
+    VIVIENDA : 'Vivienda',
+    OTROS : 'Otros',
+}

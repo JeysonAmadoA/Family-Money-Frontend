@@ -1,0 +1,30 @@
+/* styles.css */
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+.cardTitle {
+    margin-right: 20px;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.rightAlignedButton {
+    margin-left: auto;
+    display: block;
+}
+
+.cardTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

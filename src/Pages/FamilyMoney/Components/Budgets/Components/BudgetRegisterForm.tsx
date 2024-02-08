@@ -1,54 +1,63 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BudgetRegister } from "../../../../../Models/Budgets/Budgets.Model";
+import { BUDGET_CATEGORIES, BudgetRegister } from "../../../../../Models/Budgets/Budgets.Model";
 import { storeBudget } from "../../../../../Services/Budgets/Budget.Service";
 import { NewPeriod } from "../../../../../Services/SharingData/NewRegister.Service";
-import { Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import RequiredField from "../../../../../Components/Form/RequiredField";
+import { ReactNode } from "react";
 
 export interface BudgetForm {
+    children : ReactNode
     periodId : number
 }
 
-function BudgetRegisterForm({periodId} : BudgetForm) {
+function BudgetRegisterForm({children, periodId} : BudgetForm) {
 
     const { register, handleSubmit, formState: { errors } } = useForm<BudgetRegister>();
 
     const registerBudget: SubmitHandler<BudgetRegister> = async (data) => {
-        try {
-          console.log(data);
-          
-          await storeBudget(data);
-          alert("Presupuesto agregado");
-          NewPeriod.setSubject(true);
-        } catch (error) {
-          console.log("No se pudo periodo", error);
-        }
-      };
-
+      try {
+        await storeBudget(data);
+        alert("Presupuesto agregado");
+        NewPeriod.setSubject(true);
+      } catch (error) {
+        console.log("No se pudo periodo", error);
+      }
+    };
 
   return (
     <form onSubmit={handleSubmit(registerBudget)}>
+      <div className="registerForm">
+        <h2>Agregar presupuesto</h2>
+        <Form.Group className="mb-3" controlId="budgetName-controlInput">
+          <Form.Label>Nombre de miembro</Form.Label>
+          <Form.Control type="text" {...register("budgetName", { required: true})} />
+        </Form.Group>
+        <RequiredField error={errors.budgetName}></RequiredField>
 
-                <label>Nombre de presupuesto</label> <br />
-                <input {...register("budgetName", { required: true })} />
-                {errors.budgetName && <span>This field is required</span>}
+        <Form.Group className="mb-3" controlId="category-controlInput">
+          <Form.Label>Rol de miembro</Form.Label>
+          <Form.Select {...register("category", { required: true })} defaultValue="">
+          <option value="" disabled>Selecciona una opción</option>
+          {Object.values(BUDGET_CATEGORIES).map((category) => (
+            <option key={category} value={category}>{category}</option>
+          ))}
+          </Form.Select>
+        </Form.Group>
+        <RequiredField error={errors.category}></RequiredField>
 
-                <br />
-                <label>Categoria</label> <br />
-                <input type="text" {...register("category", { required: true })} />
-                {errors.category && <span>This field is required</span>}
+        <Form.Group className="mb-3" controlId="percentage-controlInput">
+          <Form.Label>Aporte económico</Form.Label>
+          <Form.Control type="number" {...register("percentage", { required: true })} />
+        </Form.Group>
+        <RequiredField error={errors.percentage}></RequiredField>
 
-                <br />
-                <label>Porcentaje</label> <br />
-                <input type="number" {...register("percentage", { required: true })} />
-                {errors.percentage && <span>This field is required</span>}
-
-                <input type="hidden" {...register("periodId")} value={periodId}/>
-
-                <br />
-                <Button variant="primary" type="submit">
-                    Crear periodo
-                </Button>
-            </form> 
+        <input type="hidden" {...register("periodId")} value={periodId}/>
+        <div className="buttons">
+          {children}
+        </div>
+      </div>
+    </form> 
   )
 }
 export default BudgetRegisterForm
